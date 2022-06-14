@@ -76,11 +76,14 @@ class SchoolScript:
         self.mainDriver.find_element(By.ID, "stuIsolation").send_keys(self.globalData[0]) #當天學生隔隔人數
         self.mainDriver.find_element(By.ID, "tchIsolation").send_keys(self.globalData[1]) #當天教師隔隔人數
         self.mainDriver.find_element(By.ID, "staffIsolation").send_keys(self.globalData[2]) #當天教職員隔離人數
+        self.mainDriver.find_element(By.ID, "coachIsolation").send_keys("0")
+        self.mainDriver.find_element(By.ID, "playerIsolation").send_keys("0")
+        self.mainDriver.find_element(By.ID, "volunteerIsolation").send_keys("0")
+        self.mainDriver.find_element(By.ID, "outsourceIsolation").send_keys("0")
 
         # 是否職業傷害
         self.mainDriver.find_element(By.ID, "isOccupat_N").click()
         self.mainDriver.implicitly_wait(10)
-
 
 
     def secondPageScript3(self):
@@ -105,6 +108,11 @@ class SchoolScript:
         for personData in self.personDatas:
             seleniumService.personDataInput(self.mainDriver, personData)
 
+        self.mainDriver.find_element(By.ID, "submitBtn").click()
+        self.mainDriver.implicitly_wait(30)
+
+    def thirdPageScript(self):
+        self.mainDriver.find_element()
 
 
 

@@ -2,11 +2,11 @@ from ExcelManipulate import ExcelManipulate
 from  exception_forSchoolInfo import  StudentDataNotFound, DataHasError, EmptyDataException
 
 
-def dealPesonDatas(originRecords:list, studentData:ExcelManipulate, count=0):
+def dealPesonDatas(originRecords:list, studentData:ExcelManipulate, recordExcel:ExcelManipulate, count=0):
 
     personDataLists = []
     # [隔離學生數, 隔離老師數, 隔離教職員數]
-    globalDataList = [0, 0, 0]
+    globalDataList = [0, 0, 0, "資訊總整理：\n"]
 
     for originRecord in originRecords:
         count+=1
@@ -16,15 +16,18 @@ def dealPesonDatas(originRecords:list, studentData:ExcelManipulate, count=0):
         except EmptyDataException: continue
 
         except StudentDataNotFound:
-            print("StudentDataNotFound")
+            print("*1第"+str(count)+"筆有錯誤："+"StudentDataNotFound")
+            recordExcel.writeBackToExcel(count,1, "該學生年級班級或座號有誤，全校名冊中找不到對應資料，請檢查")
             continue
 
         except ValueError:
-            print(ValueError)
+            print("*1第"+str(count)+"筆有錯誤："+"ValueError")
+            recordExcel.writeBackToExcel(count,1, "該資料生日有誤，請檢查")
             continue
 
         except Exception as e:
             print("*1第"+str(count)+"筆有錯誤：",e.__class__, e.args)
+            recordExcel.writeBackToExcel(count,1, e.args[0])
             continue
 
         try:
@@ -32,8 +35,16 @@ def dealPesonDatas(originRecords:list, studentData:ExcelManipulate, count=0):
             personDataValidator(personDataList)
             print("塞入第"+str(count)+"筆資料")
             personDataLists.append(personDataList)
+
+            globalDataList[3] = globalDataList[3] + (str(count) + ". " +personDataList[1]+":" + personDataList[7] + "\n")
+            # 若這筆資料都沒有問題，寫入資料ok
+            recordExcel.writeBackToExcel(count,1, "該筆資料ok")
+
+
         except DataHasError as dhe:
             print("*2第" + str(count) + "筆有錯誤：", dhe)
+            recordExcel.writeBackToExcel(count,1, dhe.args[0])
+
 
     return [personDataLists, globalDataList]
 

@@ -1,5 +1,5 @@
 import time
-
+import os
 from ManipulateScript import SchoolScript
 from chromeDriver import SeleniumDriver
 from ExcelManipulate import ExcelManipulate
@@ -26,7 +26,7 @@ def dataPrepare():
     originRecords = recordExcel.getAllDataList()
     print(originRecords)
 
-    return dealPesonDatas(originRecords, studentData)
+    return dealPesonDatas(originRecords, studentData, recordExcel)
 
 if __name__ == "__main__":
 
@@ -36,7 +36,12 @@ if __name__ == "__main__":
     datas = dataPrepare()
     print(datas[0])
     print(datas[1])
-    input("確認資料無誤請按Enter繼續，若要修正資料，請關閉本程式，待Excel內資料修正完畢後再重新執行")
+    print(datas[1][3])
+
+    print("確認資料無誤請按Enter繼續，若要修正資料，請關閉本程式，待Excel內資料修正完畢後再重新執行")
+    input()
+
     startAutomation(datas)
 
+    print("test1")
 
