@@ -16,6 +16,7 @@ def startAutomation(datas:list):
     schooldriver.execute_with_errorLimit(3, schoolscript.secondPageScript2)
     schooldriver.execute_with_errorLimit(3, schoolscript.secondPageScript3)
     schooldriver.execute_with_errorLimit(3, schoolscript.secondPageScript4)
+    schooldriver.execute_with_errorLimit(3, schoolscript.thirdPageScript)
 
     time.sleep(120)
 

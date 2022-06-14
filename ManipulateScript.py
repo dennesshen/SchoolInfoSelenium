@@ -3,6 +3,8 @@ import time
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 import seleniumService
 
@@ -23,8 +25,8 @@ class SchoolScript:
         authcode = input("請輸入畫面上驗證碼:")
         while username == "" or  password == "" or authcode == "":
             print("您的帳號密碼或驗證碼有未輸入項目，請重新輸入")
-            username = input("請輸入登入帳號：")
-            password = input("請輸入登入密碼：")
+            username = input("請輸入登入帳號：") or "x12u058"
+            password = input("請輸入登入密碼：") or "j7524567"
             authcode = input("請輸入畫面上驗證碼:")
 
         self.mainDriver.find_element(By.ID, "strUserID").send_keys(username)
@@ -90,7 +92,7 @@ class SchoolScript:
 
         # 是否停課
         self.mainDriver.find_elements(By.NAME , "StopClassFlag")[0].click()
-        time.sleep(1)
+        time.sleep(3)
 
         xpath = "/html/body/div[3]/div[2]/div/div/div/div/div[3]/div/table/tbody/tr/td/div/div/table/tbody/tr[1]/td[2]/select"
         stopClass =self.mainDriver.find_element(By.XPATH, xpath)
@@ -112,7 +114,16 @@ class SchoolScript:
         self.mainDriver.implicitly_wait(30)
 
     def thirdPageScript(self):
-        self.mainDriver.find_element()
+        self.mainDriver.find_element(By.ID,"EventReason").send_keys(self.globalData[3])
+        self.mainDriver.find_element(By.ID,"EventHandleOther0").send_keys("1.加強校園清消。\n"+
+                                                                          "2.請導師加強宣導在家要多注意自己的衞生習慣，以降低染疫風險。\n"+
+                                                                          "3.持續關懷學生的身體健康及心理狀態。\n"
+                                                                          "4.並注意學生在家自主學習情形。")
 
+        print("按Enter完成通報")
+        self.mainDriver.find_element(By.ID, "SubmitBtn").click()
+        input()
+        WebDriverWait(self.mainDriver, 10).until(EC.alert_is_present(), 'Timed out waiting for simple alert to appear')
+        self.mainDriver.switch_to.alert.accept()
 
 
