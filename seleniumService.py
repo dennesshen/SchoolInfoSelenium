@@ -56,7 +56,7 @@ def personDataInput(driver:WebDriver, personDatas:list):
         case "1":
             Select(driver.find_element(By.ID, "title")).select_by_value("1")
             Select(driver.find_element(By.ID, "student_cate_sno")).select_by_value("3")
-            Select(driver.find_element(By.ID, "school_system_sno")).select_by_value("3")
+            Select(driver.find_element(By.ID, "school_system_sno")).select_by_value("4")
 
         case "2":
             Select(driver.find_element(By.ID, "title")).select_by_value("2")

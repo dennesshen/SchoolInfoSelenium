@@ -20,8 +20,8 @@ class SchoolScript:
 
 
     def firstPageScript(self):
-        username = input("請輸入登入帳號：")
-        password = input("請輸入登入密碼：")
+        username = input("請輸入登入帳號：") or "x12u058"
+        password = input("請輸入登入密碼：") or "j7524567"
         authcode = input("請輸入畫面上驗證碼:")
         while username == "" or  password == "" or authcode == "":
             print("您的帳號密碼或驗證碼有未輸入項目，請重新輸入")
